@@ -15,8 +15,7 @@ const blackHanSans = Black_Han_Sans({
   display: 'swap',
   subsets: ['latin'],
 })
-// { children }: Props
-export default function Header() {
+export default function Header({ children }: Props) {
   return (
     <div className="sticky top-0 z-10 bg-white border-b">
       <Wrapper>
@@ -65,7 +64,7 @@ export default function Header() {
           </div>
         </Container>
       </Wrapper>
-      {/* {children} */}
+      {children}
     </div>
   )
 }
