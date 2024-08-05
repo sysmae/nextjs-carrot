@@ -1,10 +1,7 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "prettier"
-],
+  "extends": ["next/core-web-vitals", "prettier"],
   "rules": {
-    "import/order":[
+    "import/order": [
       "error",
       {
         "newlines-between": "always",
@@ -13,7 +10,6 @@
           "caseInsensitive": true
         }
       }
-    ],
-  },
- 
+    ]
+  }
 }
