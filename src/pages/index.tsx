@@ -1,40 +1,31 @@
-import { useEffect, useState } from 'react'
+import { InferGetServerSidePropsType } from 'next'
 
+import Banner from './_components/Banner'
+import ProductList from './_components/ProductList'
+
+import Container from '@/components/layout/Container'
 import JggtLayout from '@/components/layout/JggtLayout'
-import { getProduct } from '@/repository/products/getProduct'
-import { Product } from '@/types'
+import Wrapper from '@/components/layout/Wrapper'
+import { getProducts } from '@/repository/products/getProducts'
 
-export default function Home() {
-  const [product, setProduct] = useState<Product | null>(null)
+export const getServerSideProps = async () => {
+  const { data } = await getProducts({ fromPage: 0, toPage: 2 })
+  return {
+    props: { products: data },
+  }
+}
 
-  useEffect(() => {
-    getProduct('1').then((res) => {
-      setProduct(res.data)
-    })
-  }, [])
+export default function Home({
+  products,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <JggtLayout>
-      <div>Sample Prodcut</div>
-      {product && (
-        <div>
-          {JSON.stringify(product)}
-          <div>{product.title}</div>
-          <div>{product.price}</div>
-          <div>{product.address}</div>
-          <div>{product.description}</div>
-          <div>
-            {product.imageUrls.map((url) => (
-              <img key={url} src={url} />
-            ))}
-          </div>
-          <div>{product.isChangeable ? '교환 가능' : '교환 불가능'}</div>
-          <div>{product.isUsed ? '중고' : '새상품'}</div>
-          <div>{product.tags?.join(', ')}</div>
-          <div>{product.createdAt}</div>
-          <div>{product.createdBy}</div>
-          <div>{product.purchaseBy}</div>
-        </div>
-      )}
+      <Wrapper>
+        <Container>
+          <Banner />
+          <ProductList initialProducts={products} />
+        </Container>
+      </Wrapper>
     </JggtLayout>
   )
 }

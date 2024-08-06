@@ -32,3 +32,6 @@ export function getMockProductData(defaultValue?: Partial<Product>) {
   }
   return data
 }
+
+export const timeout = (ms = 3000) =>
+  new Promise((resolve) => setTimeout(resolve, ms))
