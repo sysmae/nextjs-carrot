@@ -39,9 +39,13 @@ export default function AutoComplete({ query, handleClose }: Props) {
   return (
     <div className="flex flex-col h-full">
       <div className="h-full p-2">
-        <div className="border-b border-grey-300 pb-1 mb-2 flex items-center">
+        <div
+          className="border-b border-grey-300 pb-1 mb-2 flex items-center cursor-pointer"
+          onClick={() =>
+            router.push(`/search/shop?query=${encodeURIComponent(query)}`)
+          }
+        >
           <span className="material-symbols-outlined shrink-0">storefront</span>
-
           <Text size="sm" className="ml-1 shrink-0">
             상점 검색 {'>'}
           </Text>
