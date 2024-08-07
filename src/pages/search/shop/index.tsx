@@ -1,4 +1,3 @@
-import { constants } from 'http2'
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import React, { useEffect, useState } from 'react'

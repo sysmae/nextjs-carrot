@@ -1,5 +1,6 @@
 import { Black_Han_Sans } from 'next/font/google'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 
 import Search from './_components/Search'
@@ -16,11 +17,15 @@ const blackHanSans = Black_Han_Sans({
   subsets: ['latin'],
 })
 export default function Header({ children }: Props) {
+  const router = useRouter()
   return (
     <div className="sticky top-0 z-10 bg-white border-b">
       <Wrapper>
         <Container>
-          <div className="flex justify-between items-center py-8 gap-2">
+          <div
+            className="flex justify-between items-center py-8 gap- cursor-pointer2"
+            onClick={() => router.push('/')}
+          >
             <Link href="/" prefetch={false}>
               <Text size="4xl" className={blackHanSans.className}>
                 🗃 중고장터
