@@ -23,7 +23,7 @@ export default function Header({ children }: Props) {
       <Wrapper>
         <Container>
           <div
-            className="flex justify-between items-center py-8 gap- cursor-pointer2"
+            className="flex justify-between items-center py-8 gap-2"
             onClick={() => router.push('/')}
           >
             <Link href="/" prefetch={false}>

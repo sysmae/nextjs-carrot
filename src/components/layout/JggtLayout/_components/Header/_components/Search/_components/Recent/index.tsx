@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 import Text from '@/components/common/Text'
@@ -13,8 +13,6 @@ type Props = {
 }
 
 export default function Recent({ handleClose }: Props) {
-  const router = useRouter()
-
   const [recents, setRecents] = useState<string[]>([])
 
   useEffect(() => {
@@ -38,18 +36,22 @@ export default function Recent({ handleClose }: Props) {
           </div>
         ) : (
           recents.map((recent, index) => (
-            <Text
-              key={index}
-              size="sm"
-              className="block my-1 truncate cursor-pointer"
-              onClick={() => {
-                addRecentKeyword(recent)
-                router.push(`/search?query=${encodeURIComponent(recent)}`)
-                // handleClose()
-              }}
+            <Link
+              key={recent}
+              href={`/search?query=${encodeURIComponent(recent)}`}
+              prefetch={false}
             >
-              {recent}
-            </Text>
+              <Text
+                size="sm"
+                className="block my-1 truncate"
+                onClick={() => {
+                  addRecentKeyword(recent)
+                  handleClose()
+                }}
+              >
+                {recent}
+              </Text>
+            </Link>
           ))
         )}
       </div>

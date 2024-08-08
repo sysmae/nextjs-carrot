@@ -1,5 +1,5 @@
 import { throttle } from 'lodash'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useEffect, useState, useMemo } from 'react'
 
 import Text from '@/components/common/Text'
@@ -12,7 +12,6 @@ type Props = {
 }
 
 export default function AutoComplete({ query, handleClose }: Props) {
-  const router = useRouter()
   const [keywords, setKeywords] = useState<string[]>([])
 
   const handleSearch = useMemo(
@@ -39,11 +38,11 @@ export default function AutoComplete({ query, handleClose }: Props) {
   return (
     <div className="flex flex-col h-full">
       <div className="h-full p-2">
-        <div
-          className="border-b border-grey-300 pb-1 mb-2 flex items-center cursor-pointer"
-          onClick={() =>
-            router.push(`/search/shop?query=${encodeURIComponent(query)}`)
-          }
+        <Link
+          className="border-b border-grey-300 pb-1 mb-2 flex items-center"
+          href={`/search/shop?query=${encodeURIComponent(query)}`}
+          prefetch={false}
+          onClick={handleClose}
         >
           <span className="material-symbols-outlined shrink-0">storefront</span>
           <Text size="sm" className="ml-1 shrink-0">
@@ -55,7 +54,7 @@ export default function AutoComplete({ query, handleClose }: Props) {
           <Text size="sm" color="grey" className="shrink-0">
             상점명으로 검색
           </Text>
-        </div>
+        </Link>
         {keywords.length === 0 ? (
           <div className="h-full flex justify-center items-center">
             <Text color="grey" size="sm">
@@ -65,18 +64,19 @@ export default function AutoComplete({ query, handleClose }: Props) {
         ) : (
           <div className="h-full overflow-scroll pb-8">
             {keywords.map((keyword, idx) => (
-              <Text
-                size="sm"
-                className="block my-1 truncate cursor-pointer "
+              <Link
                 key={keyword}
+                href={`/search?query=${encodeURIComponent(keyword)}`}
+                prefetch={false}
                 onClick={() => {
                   addRecentKeyword(keyword)
-                  router.push(`/search?query=${encodeURIComponent(keyword)}`)
-                  // handleClose()
+                  handleClose()
                 }}
               >
-                {keyword}
-              </Text>
+                <Text size="sm" className="block my-1 truncate cursor-pointer">
+                  {keyword}
+                </Text>
+              </Link>
             ))}
           </div>
         )}

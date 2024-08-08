@@ -1,6 +1,14 @@
 import { fakerKO as faker } from '@faker-js/faker'
 
-import { Product, Shop } from '@/types'
+import {
+  Product,
+  Shop,
+  Review,
+  Like,
+  Follow,
+  ChatRoom,
+  ChatMessage,
+} from '@/types'
 
 export function getMockProductData(defaultValue?: Partial<Product>) {
   const data: Product = {
@@ -33,9 +41,6 @@ export function getMockProductData(defaultValue?: Partial<Product>) {
   return data
 }
 
-export const timeout = (ms = 3000) =>
-  new Promise((resolve) => setTimeout(resolve, ms))
-
 export function getMockShopData(defaultValue?: Partial<Shop>) {
   const data: Shop = {
     id: defaultValue?.id ?? faker.string.uuid(),
@@ -46,3 +51,66 @@ export function getMockShopData(defaultValue?: Partial<Shop>) {
   }
   return data
 }
+
+export function getMockReviewData(defaultValue?: Partial<Review>) {
+  const data: Review = {
+    id: defaultValue?.id ?? faker.string.uuid(),
+    productId: defaultValue?.productId ?? faker.string.uuid(),
+    contents: defaultValue?.contents ?? faker.lorem.sentences(3, '\n'),
+    createdBy: defaultValue?.createdBy ?? faker.string.uuid(),
+    createdAt: defaultValue?.createdAt ?? faker.date.past().toString(),
+  }
+  return data
+}
+
+export function getMockLikeData(defaultValue?: Partial<Like>) {
+  const data: Like = {
+    id: defaultValue?.id ?? faker.string.uuid(),
+    productId: defaultValue?.productId ?? faker.string.uuid(),
+    createdBy: defaultValue?.createdBy ?? faker.string.uuid(),
+    createdAt: defaultValue?.createdAt ?? faker.date.past().toString(),
+  }
+  return data
+}
+
+export function getMockFollowData(defaultValue?: Partial<Follow>) {
+  const data: Follow = {
+    id: defaultValue?.id ?? faker.string.uuid(),
+    followingShopId: defaultValue?.followingShopId ?? faker.string.uuid(),
+    createdBy: defaultValue?.createdBy ?? faker.string.uuid(),
+    createdAt: defaultValue?.createdAt ?? faker.date.past().toString(),
+  }
+  return data
+}
+
+export function getMockChatRoomData(defaultValue?: Partial<ChatRoom>) {
+  const data: ChatRoom = {
+    id: defaultValue?.id ?? faker.string.uuid(),
+    createdAt: defaultValue?.createdAt ?? faker.date.past().toString(),
+    fromShopId: defaultValue?.fromShopId ?? faker.string.uuid(),
+    toShopId: defaultValue?.toShopId ?? faker.string.uuid(),
+  }
+  return data
+}
+
+export function getMockChatMessageData(defaultValue?: Partial<ChatMessage>) {
+  const data: ChatMessage = {
+    id: defaultValue?.id ?? faker.string.uuid(),
+    createdAt: defaultValue?.createdAt ?? faker.date.past().toString(),
+    chatRoom: defaultValue?.chatRoom ?? faker.string.uuid(),
+    message:
+      defaultValue?.message ??
+      (faker.datatype.boolean()
+        ? faker.lorem.sentences(3, '\n')
+        : faker.image.dataUri()),
+    createdBy: defaultValue?.createdBy ?? faker.string.uuid(),
+  }
+  return data
+}
+
+export function getMockImageDataUri() {
+  return faker.image.dataUri()
+}
+
+export const timeout = (ms = 3000) =>
+  new Promise((resolve) => setTimeout(resolve, ms))
