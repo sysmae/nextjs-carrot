@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import ProductImage from './_components/ProductImage'
 import ReviewItem from './_components/ReviewItem'
@@ -26,6 +26,7 @@ import { getShopProducts } from '@/repository/shops/getShopProducts'
 import { getShopReviewCount } from '@/repository/shops/getShopReviewCount'
 import { getShopReviews } from '@/repository/shops/getShopReviews'
 import { Shop as TShop, Product as TProduct, Review } from '@/types'
+import { addRecentItemId } from '@/utils/localstorage'
 
 export const getServerSideProps: GetServerSideProps<{
   product: TProduct
@@ -143,6 +144,10 @@ export default function ProductDetail({
     setIsFollowed((prev) => !prev)
     // 서버 요청 전달
   })
+
+  useEffect(() => {
+    addRecentItemId(product.id)
+  }, [product.id])
 
   return (
     <Wrapper>
